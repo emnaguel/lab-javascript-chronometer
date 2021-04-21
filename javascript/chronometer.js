@@ -1,74 +1,47 @@
 class Chronometer {
   constructor() {
+    this.currentTime = 0;
+    this.intervalId = 0;
     // ... your code goes here
-    this.currentTime = 0
-    this.intervalId = 0
   }
-
 
   startClick(callback) {
     this.intervalId = setInterval(() => {
       this.currentTime++;
+      console.log(this.currentTime);
       if (callback) {
-        callback()
+        callback(this.currentTime);
       }
-    }, 1000)   
-  }
-  getMinutes() {
-
+    }, 1000); // every seconds
     // ... your code goes here
+  }
+
+  getMinutes() {
     return Math.floor(this.currentTime / 60);
+    // ... your code goes here
   }
   getSeconds() {
+    return this.currentTime - this.getMinutes() * 60;
     // ... your code goes here
-     
-    return this.currentTime - (this.getMinutes() * 60);    
-
   }
-  twoDigitsNumber() {
+  twoDigitsNumber(nb) {
     // ... your code goes here
-    let getMinutes = this.getMinutes()
-    let getSeconds = this.getSeconds()
-    if(this.currentTime < 60) {
-      return `00:${getSeconds}`
-    } else {
-      if(getMinutes > 10 && this.getSeconds > 10)  {
-        return `${getMinutes}${getSeconds}`
-
-      } else if(getMinutes < 10 && getSeconds >10) {
-        return `0${getMinutes}${getSeconds}`
-      } else if (getMinutes > 10 && getSeconds < 10) {
-        return `${getMinutes}0${getSeconds}`
-      }
-    }
-   
+    return nb < 10 ? `0${nb}` : String(nb);
   }
+  //export function
   stopClick() {
+    return clearInterval(this.intervalId);
     // ... your code goes here
-    clearInterval();
   }
   resetClick() {
+    this.currentTime = 0;
     // ... your code goes here
-    this.currentTime = 0
   }
   splitClick() {
-    // ... your code goes here
-    let getMinutes = this.getMinutes();
-    let getSeconds = this.getSeconds();
-
-    if (getMinutes < 10 && getSeconds < 10) {
-      return `${0}${getMinutes}:${0}${getSeconds}`;
-    } else if (getMinutes < 10 && getSeconds > 10) {
-      return `0${getMinutes}:${getSeconds}`;
-    } else if (getMinutes > 10 && getSeconds < 10) {
-      return `${getMinutes}:0${getSeconds}`;
-    } else {
-      return `${getMinutes}:${getSeconds}`;
-    }
+    return (
+      this.twoDigitsNumber(this.getminutes()) +
+      ":" +
+      this.twoDigitsNumber(this.getSeconds())
+    );
   }
-
-  
 }
-
-const chronometre = new Chronometer
-chronometre.startClick()
